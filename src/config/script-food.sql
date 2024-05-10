@@ -72,3 +72,4 @@ insert into produto (nome, descricao, preco) values (
 -- select
 select * from usuario;
 select * from produto;
+select * from pedido;
