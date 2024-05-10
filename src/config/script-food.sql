@@ -61,3 +61,14 @@ create table pedido_item (
 		references produto (id_produto)
 );
 show columns from pedido_item;
+
+-- popular o banco
+insert into usuario values (
+	null, 'Administrador', 'adm@adm.com.br', 'adm', True);
+
+insert into produto (nome, descricao, preco) values (
+	'X-Salada', 'Hamburguer de 180g, queijo, tomate, milho, alface e cebola', 24.90);
+    
+-- select
+select * from usuario;
+select * from produto;
