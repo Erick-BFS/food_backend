@@ -14,6 +14,30 @@ class UsuarioModel {
             });
         }
 
+        //metodo para criar um novo usuario
+        static createUsuario(nome, email, senha, callback) {
+            let sql = `insert into usuario (nome, email, senha) values(?,?,?)`;
+
+            con.query(sql, [nome, email, senha], function(err, result){
+                if (err)
+                    callback(err, null);
+                else
+                    callback(null, result);
+            });
+        }
+
+        // Método para editar um usuário existente
+        static editUsuario(id, nome, email, callback){
+            let sql = `update usuario set nome=?, email=? where id_usuario=?`;
+
+            con.query(sql, [nome, email, id], function(err,result) {
+                if (err)
+                    callback(err, null);
+                else
+                    callback(null, result);
+            });
+        }
+
 }
 
 export default UsuarioModel;

@@ -1,3 +1,4 @@
+import { response } from "express";
 import UsuarioModel from "../models/model.usuario.js";
 
 class UsuarioController {
@@ -22,6 +23,66 @@ class UsuarioController {
             console.error(error);
             // Retorna uma resposta de erro 500
             res.status(500).json( { error: "Erro interno no sevidor." } );
+        }
+    }
+
+    static createUsuario(req, res) {
+        const p = req.body;
+        const nome = p.nome;
+        const email = p.email;
+        const senha = p.senha;
+
+        try {
+            UsuarioModel.createUsuario(nome, email, senha, function(err, result){
+                if (err) {
+                    console.error("Erro ao cadastrar usuario: ", err);
+                    return res.status(500).json( { error: "Ocorreu um erro ao cadastrar o usuário." } );
+                }
+
+                return res.status(201).json( { 
+                    message: "Usuário inserido com sucesso.",
+                data: {
+                    id: result.insertId,
+                    nome, 
+                    email
+                } } );
+            });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json( { error: "Erro interno do servidor" } );
+        }
+    }
+
+    static editUsuario(req, res) {
+        const id = req.params.id;
+        const p = req.body;
+        const nome = p.nome;
+        const email = p.email;
+
+        try {
+            UsuarioModel.editUsuario(id, nome, email, function(err, result){
+                if (err) {
+                    console.error("Erro ao editar o usuário: ", err);
+                    return res.status(500).json( { error: "Ocorreu um erro ao editar o usuário." } );
+                }
+
+                if (result.affectedRows === 0) {
+                    return res.status(404).json( { manssage: "Usuário não encontrado." } );
+                }
+
+                return res.status(200).json(
+                    {
+                        message: "Usuário editado com sucesso.",
+                        data: {
+                            id, nome, email
+                        }
+                    }
+                );
+            });
+        } catch (error) {
+            console.error(err);
+            res.status(500).json( { error: "Erro interno no servidor." } );
         }
     }
 
