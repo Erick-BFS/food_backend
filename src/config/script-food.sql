@@ -42,10 +42,11 @@ create table pedido (
     end_cep char(8),
     total decimal(9,2),
     primary key (id_pedido),
-    foreign key (id_pedido) 
+    foreign key (id_usuario) 
 		references usuario (id_usuario)
 );
 show columns from pedido;
+-- drop table pedido;
 
 -- criar tabela pedido_item
 create table pedido_item (
@@ -61,6 +62,7 @@ create table pedido_item (
 		references produto (id_produto)
 );
 show columns from pedido_item;
+-- drop table pedido_item;
 
 -- popular o banco
 insert into usuario values (
@@ -68,8 +70,14 @@ insert into usuario values (
 
 insert into produto (nome, descricao, preco) values (
 	'X-Salada', 'Hamburguer de 180g, queijo, tomate, milho, alface e cebola', 24.90);
+
+insert into produto (nome, descricao, preco) values (
+	'Batata Frita', 'Batatas fritas crocantes e douradas', 12.00);
+    
+insert into produto (nome, descricao, preco) values (
+	'Milkshake', ' Um milkshake cremoso feito com sorvete de chocolate', 14.90);
     
 -- select
 select * from usuario;
 select * from produto;
-select * from pedido;
+select * from pedido_item;
