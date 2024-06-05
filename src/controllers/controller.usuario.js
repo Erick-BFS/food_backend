@@ -86,6 +86,28 @@ class UsuarioController {
         }
     }
 
+    static removeUsuario(req, res) {
+        let  id = req.params.id;
+
+        try {
+            UsuarioModel.removeUsuario(id, function(err, result){
+                if (err) {
+                    console.error("Erro ao deletar usuário: ", err);
+                    return res.status(500).json( { error: "Ocorreu um erro ao deletar o usuário" } );
+                }
+
+                if (result.affectedRows === 0) {
+                    return res.status(404).json( { message: "Usuário não encontrado" } );
+                }
+
+                return res.status(200).json( { message: "Usuário deletado com sucesso.", data: { id } } );
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json( { error:"Erro interno no servidor" } );
+        }
+    }
+
 }
 
 export default UsuarioController;
